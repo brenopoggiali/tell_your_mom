@@ -1,7 +1,8 @@
 {
-  "name": "Chat Bot Chrome",
-  "description": "Chat bot chrome",
-  "version": "0.0.1",
+  "name": "Tell Your Mom",
+  "short_name": "TYM",
+  "description": "Tell Your Mom",
+  "version": "0.0.2",
   "web_accessible_resources": ["js/inject.js"],
   "background": {
     "scripts": ["js/background.js"],
@@ -15,6 +16,12 @@
   ],
   "externally_connectable": {
     "matches": ["https://*.whatsapp.com/"]
+  },
+  "icons": {
+    "16": "images/mom16.png",
+    "24": "images/mom24.png",
+    "32": "images/mom32.png",
+    "128": "images/mom128.png"
   },
   "page_action": {
     "default_popup": "index.html",

@@ -147,12 +147,14 @@ function getLastSentMsg({ username, store }) {
   const chats = store.Chat.models;
   const { msgs: { models: chatMsgs } = {} } =
     chats.find(chat => chat.__x_formattedTitle === username) || {};
-  for (let i = chatMsgs.length - 1; i > -1; i--) {
-    const {
-      __x_id: { fromMe }
-    } = chatMsgs[i];
-    if (fromMe) {
-      return chatMsgs[i];
+  if (chatMsgs) {
+    for (let i = chatMsgs.length - 1; i > -1; i--) {
+      const {
+        __x_id: { fromMe }
+      } = chatMsgs[i];
+      if (fromMe) {
+        return chatMsgs[i];
+      }
     }
   }
   return {};
