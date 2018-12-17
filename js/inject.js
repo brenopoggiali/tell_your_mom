@@ -6,20 +6,22 @@ getStore().then(store => {
       const now = new Date();
       const [hour, minute] = timeToSend.split(":");
 
-      if (!isNaN(hour) && !isNaN(minute)) {
+      const lastMsg = getLastSentMsg({ username: momName, store });
+      const timeLastMsg = lastMsg.__x_t * 1000;
+
+      if (!isNaN(hour) && !isNaN(minute) && !isNaN(timeLastMsg)) {
+        const dateLastMsg = new Date(timeLastMsg);
+
         const dateToSend = new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate(),
+          dateLastMsg.getFullYear(),
+          dateLastMsg.getMonth(),
+          dateLastMsg.getDate(),
           hour,
           minute
         );
 
         if (now.getTime() >= dateToSend.getTime()) {
-          const lastMsg = getLastSentMsg({ username: momName, store });
-          const timeLastMsg = lastMsg.__x_t * 1000;
-
-          if (timeLastMsg && timeLastMsg < dateToSend.getTime()) {
+          if (timeLastMsg < dateToSend.getTime()) {
             sendMsg({
               username: momName,
               store,
