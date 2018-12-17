@@ -16,7 +16,7 @@ getStore().then(store => {
         );
 
         if (now.getTime() >= dateToSend.getTime()) {
-          const lastMsg = getLastMsg({ username: momName, store });
+          const lastMsg = getLastSentMsg({ username: momName, store });
           const timeLastMsg = lastMsg.__x_t * 1000;
 
           if (timeLastMsg && timeLastMsg < dateToSend.getTime()) {
@@ -141,10 +141,17 @@ function getUnreadChats(store) {
   return output;
 }
 
-function getLastMsg({ username, store }) {
+function getLastSentMsg({ username, store }) {
   const chats = store.Chat.models;
   const { msgs: { models: chatMsgs } = {} } =
-  chats.find(chat => chat.__x_formattedTitle === username) || {};
-  console.log(chatMsgs);
-  return chatMsgs ? chatMsgs[chatMsgs.length - 1] : {};
+    chats.find(chat => chat.__x_formattedTitle === username) || {};
+  for (let i = chatMsgs.length - 1; i > -1; i--) {
+    const {
+      __x_id: { fromMe }
+    } = chatMsgs[i];
+    if (fromMe) {
+      return chatMsgs[i];
+    }
+  }
+  return {};
 }
