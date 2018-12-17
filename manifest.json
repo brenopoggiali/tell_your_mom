@@ -1,0 +1,36 @@
+{
+  "name": "Chat Bot Chrome",
+  "description": "Chat bot chrome",
+  "version": "0.0.1",
+  "web_accessible_resources": ["js/inject.js"],
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.whatsapp.com/"],
+      "js": ["js/content_script.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.whatsapp.com/"]
+  },
+  "page_action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "images/mom16.png",
+      "24": "images/mom24.png",
+      "32": "images/mom32.png",
+      "128": "images/mom128.png"
+    }
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "declarativeContent",
+    "nativeMessaging"
+  ],
+  "manifest_version": 2
+}
